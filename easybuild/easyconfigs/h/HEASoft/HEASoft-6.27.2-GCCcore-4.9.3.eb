@@ -1,0 +1,92 @@
+name = 'HEASoft'
+version = '6.27.2'
+
+# see also https://github.com/ISDC-integral/osa-python-docker/
+
+dependencies = [
+    ( 'CFITSIO', '3.48' ),
+    ( 'Perl', '5.30.2' ),
+]
+
+easyblock = 'ConfigureMake'
+
+homepage = ''
+description = """"""
+
+toolchain = {'name': 'GCCcore', 'version': '4.9.3'}
+toolchainopts = {'pic': True}
+
+source_urls = [
+    'https://www.isdc.unige.ch/~savchenk/cache/heasoft/',
+    'https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft%(version)s/',
+]
+sources = ['heasoft-%(version)ssrc_no_xspec_modeldata.tar.gz']
+patches = []
+
+preconfigopts = "cd BUILD_DIR/ &&"
+prebuildopts = "cd BUILD_DIR/ &&"
+
+# build fails with parallel
+parallel = False
+
+preinstallopts = "cd BUILD_DIR/ &&"
+
+# note that "x86_64-pc-linux-gnu-libc2.17" is hardcoded, since it is derived from toolchain and platform
+# it might differ in different case: to be checked
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['x86_64-pc-linux-gnu-libc2.17/bin', 'x86_64-pc-linux-gnu-libc2.17/lib'],
+}
+
+modextrapaths = {
+    'PATH': 'x86_64-pc-linux-gnu-libc2.17/bin',
+    'LD_LIBRARY_PATH': 'x86_64-pc-linux-gnu-libc2.17/lib',
+}
+    #'PATH': '%(installdir)s/x86_64-pc-linux-gnu-libc2.17/bin',
+    #'LD_LIBRARY_PATH': '%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib',
+
+modextravars = dict(
+    HEADAS="%(installdir)s/x86_64-pc-linux-gnu-libc2.17",
+    EXT="lnx",
+    LYNX_CFG="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib",
+    FTOOLS="%(installdir)s/x86_64-pc-linux-gnu-libc2.17",
+    FTOOLSINPUT="stdin",
+    FTOOLSOUTPUT="stdout",
+    # TODO: how to set this? not critical in many cases
+    #LHEAPERL="/home/users/s/savchenk/.local/easybuild/software/Perl/5.30.2-GCCcore-4.9.3/bin/perl", 
+    LHEASOFT="%(installdir)s/x86_64-pc-linux-gnu-libc2.17",
+    LHEA_DATA="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/refdata",
+    LHEA_HELP="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/help",
+    PERL5LIB="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib/perl",
+    PERLLIB="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib/perl",
+    PFCLOBBER="1",
+    PGPLOT_DIR="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib",
+    PGPLOT_FONT="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib/grfont.dat",
+    PGPLOT_RGB="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib/rgb.txt",
+    POW_LIBRARY="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib/pow",
+    TCLRL_LIBDIR="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib",
+    XANADU="%(installdir)s",
+    XANBIN="%(installdir)s/x86_64-pc-linux-gnu-libc2.17",
+    XRDEFAULTS="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/xrdefaults",
+)
+
+modluafooter = """
+local home    = os.getenv("HOME")
+pushenv("PFILES", pathJoin(home,"pfiles") .. ";%(installdir)s/x86_64-pc-linux-gnu-libc2.17/syspfiles")
+"""
+
+modloadmsg = """
+    Welcome to the HEASoft module version %(version)s!
+"""
+
+
+
+#
+## this can be added to the module file to source the script. it will cause issues while unloading
+#if (myShellName() == "sh" or myShellName() == "bash" or myShellName() == "zsh") then
+#   execute {cmd=". $HEADAS/headas-init.sh",modeA={"load"}}
+#else
+#   execute {cmd="source $HEADAS/headas-init.csh",modeA={"load"}}
+#end
+
