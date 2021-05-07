@@ -1,26 +1,29 @@
+easyblock = 'ConfigureMake'
+
 name = 'HEASoft'
 version = '6.27.2'
 
+homepage = 'https://heasarc.gsfc.nasa.gov/lheasoft/'
+description = """
+HEASOFT is the HEASARC's software suite that currently encompasses both new and legacy mission-independent or multi-mission FTOOLS, the XANADU suite (XSPEC, XRONOS, and XIMAGE), XSTAR, and numerous mission-specific packages. 
+"""
+
+toolchain = {'name': 'GCCcore', 'version': '4.9.3'}
+toolchainopts = {'pic': True}
+
+sources = ['heasoft-%(version)ssrc_no_xspec_modeldata.tar.gz']
+source_urls = [
+    'https://www.isdc.unige.ch/~savchenk/cache/heasoft/',
+    'https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft%(version)s/',
+]
+
+patches = []
 
 dependencies = [
     ( 'CFITSIO', '3.48' ),
     ( 'Perl', '5.30.2' ),
 ]
 
-easyblock = 'ConfigureMake'
-
-homepage = ''
-description = """"""
-
-toolchain = {'name': 'GCCcore', 'version': '4.9.3'}
-toolchainopts = {'pic': True}
-
-source_urls = [
-    'https://www.isdc.unige.ch/~savchenk/cache/heasoft/',
-    'https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft%(version)s/',
-]
-sources = ['heasoft-%(version)ssrc_no_xspec_modeldata.tar.gz']
-patches = []
 
 preconfigopts = "cd BUILD_DIR/ &&"
 prebuildopts = "cd BUILD_DIR/ &&"
