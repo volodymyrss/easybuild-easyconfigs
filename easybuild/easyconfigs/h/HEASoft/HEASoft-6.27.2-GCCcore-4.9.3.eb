@@ -1,7 +1,6 @@
 name = 'HEASoft'
 version = '6.27.2'
 
-# see also https://github.com/ISDC-integral/osa-python-docker/
 
 dependencies = [
     ( 'CFITSIO', '3.48' ),
@@ -43,8 +42,6 @@ modextrapaths = {
     'PATH': 'x86_64-pc-linux-gnu-libc2.17/bin',
     'LD_LIBRARY_PATH': 'x86_64-pc-linux-gnu-libc2.17/lib',
 }
-    #'PATH': '%(installdir)s/x86_64-pc-linux-gnu-libc2.17/bin',
-    #'LD_LIBRARY_PATH': '%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib',
 
 modextravars = dict(
     HEADAS="%(installdir)s/x86_64-pc-linux-gnu-libc2.17",
@@ -54,7 +51,7 @@ modextravars = dict(
     FTOOLSINPUT="stdin",
     FTOOLSOUTPUT="stdout",
     # TODO: how to set this? not critical in many cases
-    #LHEAPERL="/home/users/s/savchenk/.local/easybuild/software/Perl/5.30.2-GCCcore-4.9.3/bin/perl", 
+    #LHEAPERL="......local/easybuild/software/Perl/5.30.2-GCCcore-4.9.3/bin/perl", 
     LHEASOFT="%(installdir)s/x86_64-pc-linux-gnu-libc2.17",
     LHEA_DATA="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/refdata",
     LHEA_HELP="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/help",
