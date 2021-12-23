@@ -1,7 +1,7 @@
 easyblock = 'ConfigureMake'
 
 name = 'HEASoft'
-version = '6.27.2'
+version = '6.29'
 
 homepage = 'https://heasarc.gsfc.nasa.gov/lheasoft/'
 description = """
@@ -24,10 +24,16 @@ builddependencies = [('binutils', '2.34')]
 dependencies = [
     ( 'CFITSIO', '3.48' ),
     ( 'Perl', '5.30.2' ),
+    #( 'X11', '20200222' ),
+    #( 'OpenSSL', '1.1.1e' )
 ]
 
 
 preconfigopts = "cd BUILD_DIR/ &&"
+
+# ideally we want x11
+#configopts = "--disable-x"
+
 prebuildopts = "cd BUILD_DIR/ &&"
 
 # build fails with parallel
@@ -35,47 +41,47 @@ parallel = False
 
 preinstallopts = "cd BUILD_DIR/ &&"
 
-# note that "x86_64-pc-linux-gnu-libc2.17" is hardcoded, since it is derived from toolchain and platform
+# note that "x86_64-pc-linux-gnu-libc2.31" is hardcoded, since it is derived from toolchain and platform
 # it might differ in different case: to be checked
 
 sanity_check_paths = {
     'files': [],
-    'dirs': ['x86_64-pc-linux-gnu-libc2.17/bin', 'x86_64-pc-linux-gnu-libc2.17/lib'],
+    'dirs': ['x86_64-pc-linux-gnu-libc2.31/bin', 'x86_64-pc-linux-gnu-libc2.31/lib'],
 }
 
 modextrapaths = {
-    'PATH': 'x86_64-pc-linux-gnu-libc2.17/bin',
-    'LD_LIBRARY_PATH': 'x86_64-pc-linux-gnu-libc2.17/lib',
+    'PATH': 'x86_64-pc-linux-gnu-libc2.31/bin',
+    'LD_LIBRARY_PATH': 'x86_64-pc-linux-gnu-libc2.31/lib',
 }
 
 modextravars = dict(
-    HEADAS="%(installdir)s/x86_64-pc-linux-gnu-libc2.17",
+    HEADAS="%(installdir)s/x86_64-pc-linux-gnu-libc2.31",
     EXT="lnx",
-    LYNX_CFG="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib",
-    FTOOLS="%(installdir)s/x86_64-pc-linux-gnu-libc2.17",
+    LYNX_CFG="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib",
+    FTOOLS="%(installdir)s/x86_64-pc-linux-gnu-libc2.31",
     FTOOLSINPUT="stdin",
     FTOOLSOUTPUT="stdout",
     # TODO: how to set this? not critical in many cases
     #LHEAPERL="......local/easybuild/software/Perl/5.30.2-GCCcore-.../bin/perl", 
-    LHEASOFT="%(installdir)s/x86_64-pc-linux-gnu-libc2.17",
-    LHEA_DATA="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/refdata",
-    LHEA_HELP="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/help",
-    PERL5LIB="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib/perl",
-    PERLLIB="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib/perl",
+    LHEASOFT="%(installdir)s/x86_64-pc-linux-gnu-libc2.31",
+    LHEA_DATA="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/refdata",
+    LHEA_HELP="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/help",
+    PERL5LIB="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib/perl",
+    PERLLIB="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib/perl",
     PFCLOBBER="1",
-    PGPLOT_DIR="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib",
-    PGPLOT_FONT="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib/grfont.dat",
-    PGPLOT_RGB="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib/rgb.txt",
-    POW_LIBRARY="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib/pow",
-    TCLRL_LIBDIR="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/lib",
+    PGPLOT_DIR="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib",
+    PGPLOT_FONT="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib/grfont.dat",
+    PGPLOT_RGB="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib/rgb.txt",
+    POW_LIBRARY="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib/pow",
+    TCLRL_LIBDIR="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib",
     XANADU="%(installdir)s",
-    XANBIN="%(installdir)s/x86_64-pc-linux-gnu-libc2.17",
-    XRDEFAULTS="%(installdir)s/x86_64-pc-linux-gnu-libc2.17/xrdefaults",
+    XANBIN="%(installdir)s/x86_64-pc-linux-gnu-libc2.31",
+    XRDEFAULTS="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/xrdefaults",
 )
 
 modluafooter = """
 local home    = os.getenv("HOME")
-pushenv("PFILES", pathJoin(home,"pfiles") .. ";%(installdir)s/x86_64-pc-linux-gnu-libc2.17/syspfiles")
+pushenv("PFILES", pathJoin(home,"pfiles") .. ";%(installdir)s/x86_64-pc-linux-gnu-libc2.31/syspfiles")
 """
 
 
