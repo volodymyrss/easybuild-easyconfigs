@@ -24,9 +24,8 @@ builddependencies = [('binutils', '2.34')]
 dependencies = [
     ( 'CFITSIO', '3.48' ),
     ( 'Perl', '5.30.2' ),
-    #( 'X11', '20200222' ),
-    # this apparently leads to a circular dependency?
-    #( 'OpenSSL', '1.1.1e' ) 
+    ( 'X11', '20200222' ),
+    ( 'OpenSSL', '1.1.1e' ) 
 ]
 
 
