@@ -62,7 +62,7 @@ modextravars = dict(
     FTOOLSINPUT="stdin",
     FTOOLSOUTPUT="stdout",
     # TODO: how to set this? not critical in many cases
-    #LHEAPERL="......local/easybuild/software/Perl/5.30.2-GCCcore-.../bin/perl", 
+    LHEAPERL="perl",  # try $EBROOTPERL/bin/perl  if does not work
     LHEASOFT="%(installdir)s/x86_64-pc-linux-gnu-libc2.31",
     LHEA_DATA="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/refdata",
     LHEA_HELP="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/help",
