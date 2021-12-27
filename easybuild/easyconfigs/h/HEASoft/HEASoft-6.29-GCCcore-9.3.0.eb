@@ -5,7 +5,10 @@ version = '6.29'
 
 homepage = 'https://heasarc.gsfc.nasa.gov/lheasoft/'
 description = """
-HEASOFT is the HEASARC's software suite that currently encompasses both new and legacy mission-independent or multi-mission FTOOLS, the XANADU suite (XSPEC, XRONOS, and XIMAGE), XSTAR, and numerous mission-specific packages. 
+HEASOFT is the HEASARC's software suite that currently encompasses
+both new and legacy mission-independent or multi-mission FTOOLS,
+the XANADU suite (XSPEC, XRONOS, and XIMAGE), XSTAR,
+and numerous mission-specific packages.
 """
 
 toolchain = {'name': 'GCCcore', 'version': '9.3.0'}
@@ -22,17 +25,17 @@ patches = []
 builddependencies = [('binutils', '2.34')]
 
 dependencies = [
-    ( 'CFITSIO', '3.48' ),
-    ( 'Perl', '5.30.2' ),
-    ( 'X11', '20200222' ),
-    ( 'OpenSSL', '1.1.1e' ) 
+    ('CFITSIO', '3.48'),
+    ('Perl', '5.30.2'),
+    ('X11', '20200222'),
+    ('OpenSSL', '1.1.1e')
 ]
 
 
 preconfigopts = "cd BUILD_DIR/ &&"
 
 # ideally we want x11
-#configopts = "--disable-x"
+# configopts = "--disable-x"
 
 prebuildopts = "cd BUILD_DIR/ &&"
 
@@ -41,17 +44,24 @@ parallel = False
 
 preinstallopts = "cd BUILD_DIR/ &&"
 
-# note that "x86_64-pc-linux-gnu-libc2.31" is hardcoded, since it is derived from toolchain and platform
+# note that "x86_64-pc-linux-gnu-libc2.31" is hardcoded,
+# since it is derived from toolchain and platform
 # it might differ in different case: to be checked
 
 sanity_check_paths = {
-    'files': [],
-    'dirs': ['x86_64-pc-linux-gnu-libc2.31/bin', 'x86_64-pc-linux-gnu-libc2.31/lib'],
+    'files': ['x86_64-pc-linux-gnu-libc2.31/bin/fstatistic',
+              'x86_64-pc-linux-gnu-libc2.31/bin/fv',
+              'x86_64-pc-linux-gnu-libc2.31/lib/python/heasp.py',
+              'x86_64-pc-linux-gnu-libc2.31/lib/libXSUtil.so'],
+    'dirs': ['x86_64-pc-linux-gnu-libc2.31/bin',
+             'x86_64-pc-linux-gnu-libc2.31/lib'],
 }
 
 modextrapaths = {
     'PATH': 'x86_64-pc-linux-gnu-libc2.31/bin',
     'LD_LIBRARY_PATH': 'x86_64-pc-linux-gnu-libc2.31/lib',
+    'PYTHONPATH': ['x86_64-pc-linux-gnu-libc2.31/lib/python',
+                   'x86_64-pc-linux-gnu-libc2.31/lib'],
 }
 
 modextravars = dict(
@@ -61,7 +71,6 @@ modextravars = dict(
     FTOOLS="%(installdir)s/x86_64-pc-linux-gnu-libc2.31",
     FTOOLSINPUT="stdin",
     FTOOLSOUTPUT="stdout",
-    # TODO: how to set this? not critical in many cases
     LHEAPERL="perl",
     LHEASOFT="%(installdir)s/x86_64-pc-linux-gnu-libc2.31",
     LHEA_DATA="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/refdata",
@@ -80,16 +89,6 @@ modextravars = dict(
 )
 
 modluafooter = """
-local home    = os.getenv("HOME")
-pushenv("PFILES", pathJoin(home,"pfiles") .. ";%(installdir)s/x86_64-pc-linux-gnu-libc2.31/syspfiles")
+  local home = os.getenv("HOME")
+  pushenv("PFILES", pathJoin(home, "pfiles") .. ";%(installdir)s/x86_64-pc-linux-gnu-libc2.31/syspfiles")
 """
-
-
-#
-## this can be added to the module file to source the script. it will cause issues while unloading
-#if (myShellName() == "sh" or myShellName() == "bash" or myShellName() == "zsh") then
-#   execute {cmd=". $HEADAS/headas-init.sh",modeA={"load"}}
-#else
-#   execute {cmd="source $HEADAS/headas-init.csh",modeA={"load"}}
-#end
-
