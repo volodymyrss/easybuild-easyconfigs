@@ -20,21 +20,23 @@ source_urls = [
     'https://heasarc.gsfc.nasa.gov/FTP/software/lheasoft/lheasoft%(version)s/',
 ]
 
-patches = []
+patches = ['heasoft-move-platform-dependent.patch']
 
 builddependencies = [('binutils', '2.34')]
 
 dependencies = [
     ('CFITSIO', '3.48'),
     ('Perl', '5.30.2'),
+    ('Python', '3.8.2'),
     ('X11', '20200222'),
     ('OpenSSL', '1.1.1e')
 ]
 
 
+
+
 preconfigopts = "cd BUILD_DIR/ &&"
 
-# ideally we want x11
 # configopts = "--disable-x"
 
 prebuildopts = "cd BUILD_DIR/ &&"
@@ -44,51 +46,43 @@ parallel = False
 
 preinstallopts = "cd BUILD_DIR/ &&"
 
-# note that "x86_64-pc-linux-gnu-libc2.31" is hardcoded,
-# since it is derived from toolchain and platform
-# it might differ in different case: to be checked
-
 sanity_check_paths = {
-    'files': ['x86_64-pc-linux-gnu-libc2.31/bin/fstatistic',
-              'x86_64-pc-linux-gnu-libc2.31/bin/fv',
-              'x86_64-pc-linux-gnu-libc2.31/lib/python/heasp.py',
-              'x86_64-pc-linux-gnu-libc2.31/lib/libXSUtil.so'],
-    'dirs': ['x86_64-pc-linux-gnu-libc2.31/bin',
-             'x86_64-pc-linux-gnu-libc2.31/lib'],
+    'files': ['bin/fstatistic',
+              'bin/fv',
+              'lib/python/heasp.py',
+              'lib/libXSUtil.so'],
+    'dirs': ['bin',
+             'lib'],
 }
 
 modextrapaths = {
-    'PATH': 'x86_64-pc-linux-gnu-libc2.31/bin',
-    'LD_LIBRARY_PATH': 'x86_64-pc-linux-gnu-libc2.31/lib',
-    'PYTHONPATH': ['x86_64-pc-linux-gnu-libc2.31/lib/python',
-                   'x86_64-pc-linux-gnu-libc2.31/lib'],
+    'PYTHONPATH': ['lib/python',
+                   'lib'],
 }
 
 modextravars = dict(
-    HEADAS="%(installdir)s/x86_64-pc-linux-gnu-libc2.31",
+    HEADAS="%(installdir)s",
     EXT="lnx",
-    LYNX_CFG="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib",
-    FTOOLS="%(installdir)s/x86_64-pc-linux-gnu-libc2.31",
+    LYNX_CFG="%(installdir)s/lib",
+    FTOOLS="%(installdir)s",
     FTOOLSINPUT="stdin",
     FTOOLSOUTPUT="stdout",
     LHEAPERL="perl",
-    LHEASOFT="%(installdir)s/x86_64-pc-linux-gnu-libc2.31",
-    LHEA_DATA="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/refdata",
-    LHEA_HELP="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/help",
-    PERL5LIB="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib/perl",
-    PERLLIB="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib/perl",
+    LHEASOFT="%(installdir)s",
+    LHEA_DATA="%(installdir)s/refdata",
+    LHEA_HELP="%(installdir)s/help",
     PFCLOBBER="1",
-    PGPLOT_DIR="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib",
-    PGPLOT_FONT="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib/grfont.dat",
-    PGPLOT_RGB="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib/rgb.txt",
-    POW_LIBRARY="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib/pow",
-    TCLRL_LIBDIR="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/lib",
+    PGPLOT_DIR="%(installdir)s/lib",
+    PGPLOT_FONT="%(installdir)s/lib/grfont.dat",
+    PGPLOT_RGB="%(installdir)s/lib/rgb.txt",
+    POW_LIBRARY="%(installdir)s/lib/pow",
+    TCLRL_LIBDIR="%(installdir)s/lib",
     XANADU="%(installdir)s",
-    XANBIN="%(installdir)s/x86_64-pc-linux-gnu-libc2.31",
-    XRDEFAULTS="%(installdir)s/x86_64-pc-linux-gnu-libc2.31/xrdefaults",
+    XANBIN="%(installdir)s",
+    XRDEFAULTS="%(installdir)s/xrdefaults",
 )
 
 modluafooter = """
   local home = os.getenv("HOME")
-  pushenv("PFILES", pathJoin(home, "pfiles") .. ";%(installdir)s/x86_64-pc-linux-gnu-libc2.31/syspfiles")
+  pushenv("PFILES", pathJoin(home, "pfiles") .. ";%(installdir)s/syspfiles")
 """
