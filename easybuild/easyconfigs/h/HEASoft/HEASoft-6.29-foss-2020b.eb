@@ -35,6 +35,7 @@ dependencies = [
     ('Perl', '5.32.0'),
     ('Python', '3.8.6'),
     ('SciPy-bundle', '2020.11'),
+# this suffers from https://crux.nu/bugs/?do=details&task_id=1784
     ('X11', '20201008'),
     ('OpenSSL', '1.1.1h')
 ]
