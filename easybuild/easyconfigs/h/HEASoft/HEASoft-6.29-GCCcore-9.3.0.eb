@@ -2,7 +2,6 @@ easyblock = 'ConfigureMake'
 
 name = 'HEASoft'
 version = '6.29'
-versionsuffix = '-Python-%(pyver)s'
 
 homepage = 'https://heasarc.gsfc.nasa.gov/lheasoft/'
 description = """
@@ -29,8 +28,6 @@ builddependencies = [('binutils', '2.34')]
 dependencies = [
     ('CFITSIO', '3.48'),
     ('Perl', '5.30.2'),
-    ('Python', '3.8.2'),
-    ('SciPy-bundle', '2020.03', versionsuffix),
     ('X11', '20200222'),
     ('OpenSSL', '1.1.1e')
 ]
@@ -51,8 +48,7 @@ preinstallopts = "cd BUILD_DIR/ &&"
 
 
 modextrapaths = {
-    'PYTHONPATH': ['lib/python',
-                   'lib'],
+    'PYTHONPATH': ['lib'],
 }
 
 modextravars = dict(
@@ -85,7 +81,6 @@ modluafooter = """
 sanity_check_paths = {
     'files': ['bin/fstatistic',
               'bin/fv',
-              'lib/python/heasp.py', # depends on numpy!
               'lib/libXSUtil.so'],
     'dirs': ['bin',
              'lib'],

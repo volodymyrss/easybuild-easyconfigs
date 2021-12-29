@@ -99,6 +99,8 @@ sanity_check_paths = {
 
 sanity_check_commands = [
     "fversion",
-    "plist batfftimage"
+    "plist batfftimage",
+    "python -c 'import xspec; xspec.AllData'",
+    "python -c 'import heasp; heasp.rmf'"
 ]
 
