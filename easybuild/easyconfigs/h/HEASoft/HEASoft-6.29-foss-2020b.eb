@@ -34,6 +34,7 @@ dependencies = [
     ('CFITSIO', '3.49'),
     ('Perl', '5.32.0'),
     ('Python', '3.8.6'),
+# requires --optarch=march=core-avx2 else FFTW fails to build
     ('SciPy-bundle', '2020.11'),
 # this suffers from https://crux.nu/bugs/?do=details&task_id=1784
     ('X11', '20201008'),
