@@ -2,7 +2,7 @@ easyblock = 'ConfigureMake'
 
 name = 'HEASoft'
 version = '6.29'
-versionsuffix = '-Python-%(pyver)s'
+#versionsuffix = '-Python-%(pyver)s'
 
 homepage = 'https://heasarc.gsfc.nasa.gov/lheasoft/'
 description = """
@@ -12,8 +12,12 @@ the XANADU suite (XSPEC, XRONOS, and XIMAGE), XSTAR,
 and numerous mission-specific packages.
 """
 
-toolchain = {'name': 'foss', 'version': '2020a'}
-#toolchain = {'name': 'GCCcore', 'version': '9.3.0'}
+# needed for numpy and heasoft/heasp module
+toolchain = {'name': 'foss', 'version': '2020b'}
+
+# sufficient for anything but heasoft/heasp module
+# toolchain = {'name': 'GCCcore', 'version': '9.3.0'}
+
 toolchainopts = {'pic': True}
 
 sources = ['heasoft-%(version)ssrc_no_xspec_modeldata.tar.gz']
@@ -24,15 +28,15 @@ source_urls = [
 
 patches = ['heasoft-move-platform-dependent.patch']
 
-builddependencies = [('binutils', '2.34')]
+builddependencies = [('binutils', '2.35')]
 
 dependencies = [
-    ('CFITSIO', '3.48'),
-    ('Perl', '5.30.2'),
-    ('Python', '3.8.2'),
-    ('SciPy-bundle', '2020.03', versionsuffix),
-    ('X11', '20200222'),
-    ('OpenSSL', '1.1.1e')
+    ('CFITSIO', '3.49'),
+    ('Perl', '5.32.0'),
+    ('Python', '3.8.6'),
+    ('SciPy-bundle', '2020.11'),
+    ('X11', '20201008'),
+    ('OpenSSL', '1.1.1h')
 ]
 
 

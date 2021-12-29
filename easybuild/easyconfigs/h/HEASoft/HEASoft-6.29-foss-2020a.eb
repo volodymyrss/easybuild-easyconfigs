@@ -12,8 +12,12 @@ the XANADU suite (XSPEC, XRONOS, and XIMAGE), XSTAR,
 and numerous mission-specific packages.
 """
 
+# needed for numpy and heasoft/heasp module
 toolchain = {'name': 'foss', 'version': '2020a'}
-#toolchain = {'name': 'GCCcore', 'version': '9.3.0'}
+
+# sufficient for anything but heasoft/heasp module
+# toolchain = {'name': 'GCCcore', 'version': '9.3.0'}
+
 toolchainopts = {'pic': True}
 
 sources = ['heasoft-%(version)ssrc_no_xspec_modeldata.tar.gz']
